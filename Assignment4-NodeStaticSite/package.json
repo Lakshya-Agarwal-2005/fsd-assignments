@@ -1,7 +1,7 @@
 {
-  "name": "node-static-website",
+  "name": "pixel-pit-static-site",
   "version": "1.0.0",
-  "description": "A Node.js application which serves a static website",
+  "description": "Node.js application that serves the Pixel Pit arcade cafe static website",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

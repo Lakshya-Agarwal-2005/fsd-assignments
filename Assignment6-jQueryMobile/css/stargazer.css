@@ -1,0 +1,114 @@
+/* Stargazer theme on top of jQuery Mobile's "b" (dark) swatch */
+:root {
+  --night: #0e1330;
+  --night-2: #181e48;
+  --moon: #f4e9c1;
+  --nebula: #8f7cf7;
+  --text: #e9e8f5;
+  --muted: #a6a8c8;
+  --line: rgba(255, 255, 255, 0.1);
+}
+
+body, .ui-page-theme-b, .ui-btn, input, select, textarea, h1, h2, h3 {
+  font-family: "Jost", "Helvetica Neue", Arial, sans-serif !important;
+  text-shadow: none !important;
+}
+
+/* Starry background on every page */
+.ui-page-theme-b {
+  background:
+    radial-gradient(1px 1px at 12% 18%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 72% 8%, #fff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 40% 30%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 88% 40%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 22% 62%, #cfd3ff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 64% 74%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 8% 88%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 94% 92%, #cfd3ff 50%, transparent 51%),
+    linear-gradient(180deg, var(--night) 0%, var(--night-2) 100%) !important;
+  background-attachment: fixed !important;
+  color: var(--text) !important;
+}
+
+.ui-header.ui-bar-b, .ui-footer.ui-bar-b {
+  background: rgba(14, 19, 48, 0.92) !important;
+  border-color: var(--line) !important;
+  backdrop-filter: blur(8px);
+}
+.ui-header .ui-title { font-weight: 600; letter-spacing: 0.02em; }
+
+.ui-navbar .ui-btn { background: transparent !important; border-color: var(--line) !important; color: var(--muted) !important; }
+.ui-navbar .ui-btn.ui-btn-active { color: var(--moon) !important; background: rgba(244, 233, 193, 0.08) !important; }
+.ui-navbar .ui-btn.ui-btn-active::after { background-color: var(--moon) !important; }
+
+/* Listviews and collapsibles as translucent glass */
+.ui-listview-inset, .ui-collapsible-set .ui-collapsible { border-color: var(--line) !important; }
+.ui-page-theme-b .ui-li-static, .ui-page-theme-b .ui-listview .ui-btn, .ui-page-theme-b .ui-collapsible-heading-toggle,
+.ui-page-theme-b .ui-collapsible-content {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: var(--line) !important;
+  color: var(--text) !important;
+}
+.ui-page-theme-b .ui-li-divider { background: transparent !important; color: var(--moon) !important; border-color: var(--line) !important; font-weight: 600; }
+.ui-li-aside { color: var(--muted) !important; }
+.ui-collapsible-heading-toggle { padding-right: 7.5em !important; white-space: normal !important; }
+
+/* ---------- Tonight ---------- */
+.moon-card { display: flex; align-items: center; gap: 18px; margin: 6px 0 18px; }
+#moon { width: 120px; height: 120px; flex-shrink: 0; filter: drop-shadow(0 0 22px rgba(244, 233, 193, 0.35)); }
+.eyebrow { color: var(--muted); margin: 0; }
+.moon-card h2 { margin: 2px 0 4px; font-size: 1.6rem; color: var(--moon); }
+.moon-card p { margin: 0; }
+
+.score-row {
+  display: flex; gap: 14px; align-items: center; padding: 14px; border-radius: 14px;
+  background: rgba(143, 124, 247, 0.12); border: 1px solid rgba(143, 124, 247, 0.3);
+}
+.score {
+  width: 58px; height: 58px; border-radius: 50%; flex-shrink: 0; display: grid; place-items: center;
+  font-size: 1.5rem; font-weight: 700; color: var(--night); background: var(--moon);
+}
+.score-row h3 { margin: 0; font-size: 1rem; }
+.score-row p { margin: 2px 0 0; color: var(--muted); font-size: 0.9rem; }
+
+.planet-dot {
+  width: 40px; height: 40px; border-radius: 50%; position: absolute; left: 12px; top: 50%; margin-top: -20px;
+}
+.ui-listview .has-dot { padding-left: 66px !important; }
+.ui-listview p.desc { color: var(--muted) !important; white-space: normal; }
+
+.cta.ui-btn { background: var(--moon) !important; color: var(--night) !important; border: 0 !important; font-weight: 600; margin-top: 14px; }
+
+/* ---------- Planet detail ---------- */
+.planet-hero { width: 170px; height: 170px; border-radius: 50%; margin: 10px auto 18px; }
+.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0; }
+.facts div { background: rgba(255, 255, 255, 0.06); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+.facts span { display: block; color: var(--muted); font-size: 0.8rem; }
+.facts b { font-size: 1.1rem; }
+.tip { border-left: 3px solid var(--moon); padding: 4px 0 4px 12px; color: var(--text); }
+
+/* ---------- Log ---------- */
+.ui-page-theme-b .ui-input-text, .ui-page-theme-b .ui-input-search, .ui-page-theme-b .ui-select .ui-btn {
+  background: rgba(255, 255, 255, 0.07) !important; border-color: var(--line) !important;
+}
+.ui-page-theme-b .ui-slider-track .ui-btn-active { background-color: var(--nebula) !important; border-color: var(--nebula) !important; }
+.ui-page-theme-b .ui-controlgroup .ui-btn.ui-btn-active, .ui-page-theme-b .ui-radio-on { background-color: var(--nebula) !important; border-color: var(--nebula) !important; color: #fff !important; }
+.stars { color: var(--moon); letter-spacing: 2px; }
+.empty-log { text-align: center; color: var(--muted); padding: 10px 0; }
+.popup-body { padding: 10px 18px 16px; max-width: 300px; }
+.danger.ui-btn { background: #c93a4b !important; border-color: #c93a4b !important; color: #fff !important; }
+
+/* ---------- Panel ---------- */
+.ui-panel-inner h3 { color: var(--moon); }
+.hint { color: var(--muted); font-size: 0.85rem; }
+
+/* ---------- Night vision mode ---------- */
+#redFilter {
+  position: fixed; inset: 0; z-index: 99999; pointer-events: none; display: none;
+  background: #ff1e1e; mix-blend-mode: multiply;
+}
+html.night-vision #redFilter { display: block; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-page { transition: none !important; animation: none !important; }
+}

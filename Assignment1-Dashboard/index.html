@@ -1,397 +1,206 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sales Dashboard</title>
+  <title>Monsoon Club artist dashboard</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-
-  <style>
-    :root {
-      --sidebar-width: 250px;
-      --primary-color: #0d6efd;
-      --sidebar-bg: #111827;
-      --bg-light: #f4f6fb;
-    }
-
-    body {
-      background-color: var(--bg-light);
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      width: var(--sidebar-width);
-      min-height: 100vh;
-      background-color: var(--sidebar-bg);
-      position: sticky;
-      top: 0;
-    }
-
-    .sidebar .brand {
-      color: #fff;
-      font-weight: 700;
-      font-size: 1.25rem;
-      padding: 1.5rem 1.25rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .sidebar .nav-link {
-      color: #9ca3af;
-      margin: 0.2rem 0.75rem;
-      padding: 0.7rem 1rem;
-      border-radius: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-weight: 500;
-    }
-
-    .sidebar .nav-link:hover,
-    .sidebar .nav-link.active {
-      color: #fff;
-      background-color: var(--primary-color);
-    }
-
-    .sidebar .section-label {
-      color: #6b7280;
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 1rem 1.75rem 0.25rem;
-    }
-
-    /* Main content */
-    .main-content {
-      flex: 1;
-      min-width: 0;
-    }
-
-    /* Statistic cards */
-    .stat-card {
-      border: none;
-      border-radius: 0.85rem;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
-    }
-
-    .icon-box {
-      width: 48px;
-      height: 48px;
-      border-radius: 0.6rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-    }
-
-    .chart-box {
-      position: relative;
-      height: 280px;
-    }
-
-    .progress {
-      height: 8px;
-    }
-  </style>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <link href="style.css" rel="stylesheet" />
 </head>
-
 <body>
-  <div class="d-flex">
-    <!-- Sidebar (large screens) -->
-    <aside class="sidebar d-none d-lg-block">
+  <a class="visually-hidden-focusable skip" href="#main">Skip to content</a>
+
+  <div class="shell">
+    <!-- ============ SIDEBAR (desktop) / OFFCANVAS (mobile) ============ -->
+    <aside class="sidebar offcanvas-lg offcanvas-start" tabindex="-1" id="sidebar" aria-label="Main navigation">
       <div class="brand">
-        <i class="bi bi-speedometer2 text-primary"></i>
-        <span>ShopMetrics</span>
+        <span class="brand-mark" aria-hidden="true"><i class="bi bi-vinyl-fill"></i></span>
+        <span class="brand-name">Monsoon Club</span>
+        <button type="button" class="btn-close btn-close-white d-lg-none ms-auto" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Close menu"></button>
       </div>
-      <div class="section-label">Main</div>
-      <ul class="nav flex-column">
-        <li><a href="#" class="nav-link active"><i class="bi bi-house-door"></i> Dashboard</a></li>
-        <li><a href="#" class="nav-link"><i class="bi bi-graph-up"></i> Analytics</a></li>
-        <li><a href="#" class="nav-link"><i class="bi bi-box-seam"></i> Products</a></li>
-        <li><a href="#" class="nav-link"><i class="bi bi-receipt"></i> Orders</a></li>
-        <li><a href="#" class="nav-link"><i class="bi bi-people"></i> Customers</a></li>
-      </ul>
-      <div class="section-label">Account</div>
-      <ul class="nav flex-column">
-        <li><a href="#" class="nav-link"><i class="bi bi-gear"></i> Settings</a></li>
-        <li><a href="#" class="nav-link"><i class="bi bi-box-arrow-left"></i> Logout</a></li>
-      </ul>
+
+      <nav class="nav flex-column side-nav">
+        <a class="nav-link active" href="#" aria-current="page"><i class="bi bi-grid-1x2"></i><span>Overview</span></a>
+        <a class="nav-link" href="#tracks"><i class="bi bi-music-note-list"></i><span>Tracks</span></a>
+        <a class="nav-link" href="#audience"><i class="bi bi-geo-alt"></i><span>Audience</span></a>
+        <a class="nav-link" href="#feed"><i class="bi bi-chat-heart"></i><span>Fan activity</span></a>
+        <a class="nav-link" href="#"><i class="bi bi-cash-coin"></i><span>Payouts</span></a>
+        <a class="nav-link" href="#"><i class="bi bi-gear"></i><span>Settings</span></a>
+      </nav>
+
+      <div class="release-card">
+        <p class="small mb-1 opacity-75">Next single</p>
+        <p class="release-title">Paper Boats</p>
+        <div class="countdown" id="countdown" aria-live="polite">
+          <div><b id="cd-d">--</b><span>days</span></div>
+          <div><b id="cd-h">--</b><span>hrs</span></div>
+          <div><b id="cd-m">--</b><span>min</span></div>
+        </div>
+      </div>
+
+      <button class="collapse-btn d-none d-lg-flex" id="collapseBtn" type="button" aria-label="Collapse sidebar">
+        <i class="bi bi-chevron-double-left"></i><span>Collapse</span>
+      </button>
     </aside>
 
-    <!-- Sidebar (mobile, offcanvas) -->
-    <div class="offcanvas offcanvas-start text-white" style="background: var(--sidebar-bg); width: 260px" tabindex="-1" id="mobileSidebar">
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title fw-bold"><i class="bi bi-speedometer2 text-primary me-2"></i>ShopMetrics</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
-      </div>
-      <div class="offcanvas-body p-0 sidebar" style="min-height: auto">
-        <ul class="nav flex-column">
-          <li><a href="#" class="nav-link active"><i class="bi bi-house-door"></i> Dashboard</a></li>
-          <li><a href="#" class="nav-link"><i class="bi bi-graph-up"></i> Analytics</a></li>
-          <li><a href="#" class="nav-link"><i class="bi bi-box-seam"></i> Products</a></li>
-          <li><a href="#" class="nav-link"><i class="bi bi-receipt"></i> Orders</a></li>
-          <li><a href="#" class="nav-link"><i class="bi bi-people"></i> Customers</a></li>
-          <li><a href="#" class="nav-link"><i class="bi bi-gear"></i> Settings</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="main-content d-flex flex-column min-vh-100">
-      <!-- Top navbar -->
-      <nav class="navbar bg-white border-bottom px-4 py-3 sticky-top">
-        <button class="btn btn-light d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
-          <i class="bi bi-list fs-5"></i>
+    <!-- ============ MAIN ============ -->
+    <div class="main">
+      <header class="topbar">
+        <button class="btn btn-icon d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-label="Open menu">
+          <i class="bi bi-list"></i>
         </button>
 
-        <form class="d-none d-sm-block me-auto">
-          <div class="input-group">
-            <span class="input-group-text bg-light border-0"><i class="bi bi-search text-muted"></i></span>
-            <input type="text" class="form-control bg-light border-0" placeholder="Search..." style="width: 230px" />
-          </div>
-        </form>
+        <div class="search d-none d-md-flex">
+          <i class="bi bi-search" aria-hidden="true"></i>
+          <input id="search" type="search" class="form-control" placeholder="Search your tracks" aria-label="Search tracks" />
+        </div>
 
-        <div class="d-flex align-items-center gap-3 ms-auto">
-          <button class="btn btn-light position-relative rounded-circle p-2">
-            <i class="bi bi-bell"></i>
-            <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+        <div class="ms-auto d-flex align-items-center gap-2">
+          <div class="btn-group range" role="group" aria-label="Date range">
+            <input type="radio" class="btn-check" name="range" id="r7" value="7" autocomplete="off" />
+            <label class="btn" for="r7">7 days</label>
+            <input type="radio" class="btn-check" name="range" id="r28" value="28" autocomplete="off" checked />
+            <label class="btn" for="r28">28 days</label>
+            <input type="radio" class="btn-check" name="range" id="r365" value="365" autocomplete="off" />
+            <label class="btn" for="r365">12 months</label>
+          </div>
+          <button class="btn btn-icon" id="themeBtn" type="button" aria-label="Switch to dark mode" data-bs-toggle="tooltip" data-bs-title="Toggle dark mode">
+            <i class="bi bi-moon-stars"></i>
           </button>
           <div class="dropdown">
-            <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark" data-bs-toggle="dropdown">
-              <span class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center me-2 fw-bold" style="width: 34px; height: 34px">L</span>
-              <span class="fw-semibold small d-none d-md-inline">Lakshya</span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-              <li><a class="dropdown-item" href="#">Profile</a></li>
-              <li><a class="dropdown-item" href="#">Settings</a></li>
+            <button class="btn avatar-btn" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Account menu">
+              <span class="avatar">MC</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#">Artist profile</a></li>
+              <li><a class="dropdown-item" href="#">Team members</a></li>
               <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
+              <li><a class="dropdown-item" href="#">Sign out</a></li>
             </ul>
           </div>
         </div>
-      </nav>
+      </header>
 
-      <main class="p-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <div>
-            <h4 class="fw-bold mb-0">Dashboard Overview</h4>
-            <p class="text-muted small mb-0">Welcome back! Here is your store summary for this month.</p>
-          </div>
-          <button class="btn btn-primary d-flex align-items-center gap-2">
-            <i class="bi bi-download"></i><span class="d-none d-sm-inline">Download Report</span>
-          </button>
-        </div>
-
-        <!-- Statistic cards: 1 per row on phones, 2 on tablets, 4 on desktops -->
-        <div class="row g-3 mb-4">
-          <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card stat-card p-3">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <span class="text-muted small fw-medium">Total Sales</span>
-                <div class="icon-box bg-primary-subtle text-primary"><i class="bi bi-currency-rupee"></i></div>
-              </div>
-              <h3 class="fw-bold mb-1">₹2,45,800</h3>
-              <span class="text-success small fw-medium"><i class="bi bi-arrow-up-right"></i> +14.2%
-                <span class="text-muted fw-normal ms-1">vs last month</span></span>
-            </div>
-          </div>
-
-          <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card stat-card p-3">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <span class="text-muted small fw-medium">Orders</span>
-                <div class="icon-box bg-success-subtle text-success"><i class="bi bi-bag-check"></i></div>
-              </div>
-              <h3 class="fw-bold mb-1">1,862</h3>
-              <span class="text-success small fw-medium"><i class="bi bi-arrow-up-right"></i> +6.8%
-                <span class="text-muted fw-normal ms-1">vs last month</span></span>
-            </div>
-          </div>
-
-          <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card stat-card p-3">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <span class="text-muted small fw-medium">New Customers</span>
-                <div class="icon-box bg-warning-subtle text-warning"><i class="bi bi-person-plus"></i></div>
-              </div>
-              <h3 class="fw-bold mb-1">512</h3>
-              <span class="text-danger small fw-medium"><i class="bi bi-arrow-down-right"></i> -3.1%
-                <span class="text-muted fw-normal ms-1">vs last month</span></span>
-            </div>
-          </div>
-
-          <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card stat-card p-3">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <span class="text-muted small fw-medium">Avg. Rating</span>
-                <div class="icon-box bg-info-subtle text-info"><i class="bi bi-star"></i></div>
-              </div>
-              <h3 class="fw-bold mb-1">4.6 / 5</h3>
-              <span class="text-success small fw-medium"><i class="bi bi-arrow-up-right"></i> +0.2
-                <span class="text-muted fw-normal ms-1">vs last month</span></span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Charts -->
-        <div class="row g-3 mb-4">
+      <main id="main" class="content">
+        <!-- Hero: now playing -->
+        <section class="row g-3 mb-3">
           <div class="col-12 col-xl-8">
-            <div class="card border-0 shadow-sm rounded-3 p-3 h-100">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <h6 class="fw-bold mb-0">Monthly Sales</h6>
-                <div class="btn-group btn-group-sm">
-                  <button class="btn btn-outline-secondary active">2026</button>
-                  <button class="btn btn-outline-secondary">2025</button>
+            <div class="now-playing" id="nowPlaying">
+              <div class="cover" id="cover" aria-hidden="true"><span id="coverInitial">M</span></div>
+              <div class="np-body">
+                <p class="np-label">Your top track this period</p>
+                <h1 class="np-title" id="npTitle">Monsoon Letters</h1>
+                <p class="np-meta" id="npMeta">412,880 streams in this period, from Rooftop Weather (2025)</p>
+                <canvas id="wave" height="56" aria-hidden="true"></canvas>
+                <div class="d-flex align-items-center gap-2 mt-2">
+                  <button class="btn btn-play" id="npPlay" type="button" aria-label="Play Monsoon Letters">
+                    <i class="bi bi-play-fill"></i>
+                  </button>
+                  <span class="small np-hint">Plays a short preview</span>
                 </div>
               </div>
-              <div class="chart-box"><canvas id="salesChart"></canvas></div>
             </div>
           </div>
-
           <div class="col-12 col-xl-4">
-            <div class="card border-0 shadow-sm rounded-3 p-3 h-100">
-              <h6 class="fw-bold mb-3">Sales by Category</h6>
-              <div class="chart-box"><canvas id="categoryChart"></canvas></div>
+            <div class="panel h-100 goal">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h2 class="panel-title">Road to 1M listeners</h2>
+                  <p class="text-secondary small mb-0">Monthly listener goal for the tour announcement</p>
+                </div>
+                <i class="bi bi-flag fs-4 text-secondary" aria-hidden="true"></i>
+              </div>
+              <div class="goal-ring" role="img" id="goalRing" aria-label="Goal progress">
+                <svg viewBox="0 0 120 120">
+                  <circle cx="60" cy="60" r="50" class="ring-bg" />
+                  <circle cx="60" cy="60" r="50" class="ring-fg" id="ringFg" />
+                </svg>
+                <div class="ring-text"><b id="goalPct">0%</b><span>of 1,000,000</span></div>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        <div class="row g-3">
-          <!-- Recent orders table -->
+        <!-- Statistic cards -->
+        <section class="row g-3 mb-3" aria-label="Key statistics" id="stats"></section>
+
+        <!-- Charts -->
+        <section class="row g-3 mb-3">
           <div class="col-12 col-xl-8">
-            <div class="card border-0 shadow-sm rounded-3 h-100">
-              <div class="card-header bg-white border-0 pt-3 d-flex justify-content-between align-items-center">
-                <h6 class="fw-bold mb-0">Recent Orders</h6>
-                <a href="#" class="small text-decoration-none fw-semibold">View All</a>
+            <div class="panel h-100">
+              <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                <div>
+                  <h2 class="panel-title">Streams by platform</h2>
+                  <p class="text-secondary small mb-0" id="chartSub">Daily streams, last 28 days</p>
+                </div>
+                <div class="legend" id="legend"></div>
+              </div>
+              <div class="chart-box"><canvas id="streamsChart" aria-label="Line chart of streams by platform"></canvas></div>
+            </div>
+          </div>
+          <div class="col-12 col-xl-4" id="audience">
+            <div class="panel h-100">
+              <h2 class="panel-title">Where fans listen</h2>
+              <p class="text-secondary small">Top cities by listeners</p>
+              <ul class="cities list-unstyled mb-0" id="cities"></ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tracks + feed -->
+        <section class="row g-3">
+          <div class="col-12 col-xl-8" id="tracks">
+            <div class="panel h-100 p-0">
+              <div class="d-flex justify-content-between align-items-center p-3 pb-2">
+                <h2 class="panel-title mb-0">Tracks</h2>
+                <button class="btn btn-sm btn-outline-primary" id="exportBtn" type="button"><i class="bi bi-download me-1"></i>Export CSV</button>
               </div>
               <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                  <thead class="table-light">
+                <table class="table table-hover align-middle mb-0 tracks">
+                  <thead>
                     <tr>
-                      <th class="ps-3">Order ID</th>
-                      <th>Customer</th>
-                      <th>Amount</th>
-                      <th>Status</th>
+                      <th scope="col" class="ps-3">Track</th>
+                      <th scope="col"><button class="sort" data-key="streams">Streams <i class="bi bi-arrow-down-up"></i></button></th>
+                      <th scope="col"><button class="sort" data-key="saves">Saves <i class="bi bi-arrow-down-up"></i></button></th>
+                      <th scope="col"><button class="sort" data-key="skip">Skip rate <i class="bi bi-arrow-down-up"></i></button></th>
+                      <th scope="col" class="pe-3 text-end">Preview</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td class="ps-3 fw-medium">#ORD-1045</td>
-                      <td>Rohan Mehta</td>
-                      <td>₹1,250</td>
-                      <td><span class="badge bg-success-subtle text-success">Delivered</span></td>
-                    </tr>
-                    <tr>
-                      <td class="ps-3 fw-medium">#ORD-1044</td>
-                      <td>Ananya Singh</td>
-                      <td>₹3,499</td>
-                      <td><span class="badge bg-warning-subtle text-warning">Pending</span></td>
-                    </tr>
-                    <tr>
-                      <td class="ps-3 fw-medium">#ORD-1043</td>
-                      <td>Kabir Verma</td>
-                      <td>₹899</td>
-                      <td><span class="badge bg-primary-subtle text-primary">Shipped</span></td>
-                    </tr>
-                    <tr>
-                      <td class="ps-3 fw-medium">#ORD-1042</td>
-                      <td>Isha Kapoor</td>
-                      <td>₹2,150</td>
-                      <td><span class="badge bg-danger-subtle text-danger">Cancelled</span></td>
-                    </tr>
-                  </tbody>
+                  <tbody id="trackBody"></tbody>
                 </table>
               </div>
             </div>
           </div>
-
-          <!-- Monthly targets -->
-          <div class="col-12 col-xl-4">
-            <div class="card border-0 shadow-sm rounded-3 p-3 h-100">
-              <h6 class="fw-bold mb-3">Monthly Targets</h6>
-              <div class="mb-3">
-                <div class="d-flex justify-content-between small mb-1"><span>Sales</span><span class="fw-semibold">82%</span></div>
-                <div class="progress"><div class="progress-bar bg-primary" style="width: 82%"></div></div>
-              </div>
-              <div class="mb-3">
-                <div class="d-flex justify-content-between small mb-1"><span>New Customers</span><span class="fw-semibold">64%</span></div>
-                <div class="progress"><div class="progress-bar bg-warning" style="width: 64%"></div></div>
-              </div>
-              <div class="mb-3">
-                <div class="d-flex justify-content-between small mb-1"><span>Deliveries</span><span class="fw-semibold">91%</span></div>
-                <div class="progress"><div class="progress-bar bg-success" style="width: 91%"></div></div>
-              </div>
-              <div>
-                <div class="d-flex justify-content-between small mb-1"><span>Returns Handled</span><span class="fw-semibold">47%</span></div>
-                <div class="progress"><div class="progress-bar bg-info" style="width: 47%"></div></div>
-              </div>
+          <div class="col-12 col-xl-4" id="feed">
+            <div class="panel h-100">
+              <h2 class="panel-title">Fan activity</h2>
+              <ul class="feed list-unstyled mb-0" id="feedList"></ul>
             </div>
           </div>
-        </div>
+        </section>
       </main>
 
-      <footer class="mt-auto text-center text-muted small py-3 border-top bg-white">
-        &copy; 2026 ShopMetrics Dashboard &middot; Built with HTML, CSS &amp; Bootstrap 5
-      </footer>
+      <footer class="foot">Monsoon Club artist dashboard, built with HTML, CSS and Bootstrap 5</footer>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div class="toast align-items-center" id="toast" role="status" aria-live="polite">
+      <div class="d-flex">
+        <div class="toast-body" id="toastBody"></div>
+        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <script>
-    // Line chart - monthly sales
-    new Chart(document.getElementById("salesChart"), {
-      type: "line",
-      data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [{
-          label: "Sales (₹)",
-          data: [98000, 112000, 105000, 134000, 128000, 152000, 168000, 159000, 187000, 205000, 198000, 245800],
-          borderColor: "#0d6efd",
-          backgroundColor: "rgba(13, 110, 253, 0.1)",
-          fill: true,
-          tension: 0.35,
-          pointRadius: 3
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: {
-          y: { ticks: { callback: (v) => "₹" + v / 1000 + "k" }, grid: { color: "#eef1f6" } },
-          x: { grid: { display: false } }
-        }
-      }
-    });
-
-    // Doughnut chart - sales by category
-    new Chart(document.getElementById("categoryChart"), {
-      type: "doughnut",
-      data: {
-        labels: ["Electronics", "Clothing", "Books", "Home"],
-        datasets: [{
-          data: [40, 28, 14, 18],
-          backgroundColor: ["#0d6efd", "#20c997", "#ffc107", "#fd7e14"],
-          borderWidth: 0
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        cutout: "68%",
-        plugins: { legend: { position: "bottom", labels: { boxWidth: 12, padding: 14 } } }
-      }
-    });
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>

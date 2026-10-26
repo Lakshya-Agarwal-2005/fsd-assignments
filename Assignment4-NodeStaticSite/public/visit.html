@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visit | Pixel Pit</title>
+  <meta name="description" content="Opening hours, address and FAQs for Pixel Pit." />
+  <link rel="icon" href="/images/logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href="/"><img src="/images/logo.svg" alt="" width="34" height="34" />Pixel Pit</a>
+      <button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+      <nav class="nav" id="nav" aria-label="Main">
+        <a href="/">Home</a>
+        <a href="/games">Games</a>
+        <a href="/events">Events</a>
+        <a href="/visit" aria-current="page">Visit</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="band">
+    <div class="wrap visit-grid">
+      <section>
+        <h1>Come play</h1>
+        <p class="open-now" id="openNow">Checking opening hours</p>
+        <table class="hours" aria-label="Opening hours">
+          <tbody>
+            <tr data-day="1"><th scope="row">Monday</th><td>11 am to 10 pm</td></tr>
+            <tr data-day="2"><th scope="row">Tuesday</th><td>11 am to 10 pm</td></tr>
+            <tr data-day="3"><th scope="row">Wednesday</th><td>11 am to 10 pm</td></tr>
+            <tr data-day="4"><th scope="row">Thursday</th><td>11 am to 10 pm</td></tr>
+            <tr data-day="5"><th scope="row">Friday</th><td>11 am to 1 am</td></tr>
+            <tr data-day="6"><th scope="row">Saturday</th><td>10 am to 1 am</td></tr>
+            <tr data-day="0"><th scope="row">Sunday</th><td>10 am to 10 pm</td></tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <div class="map" role="img" aria-label="Map: Pixel Pit is on Lane B, two minutes from Koregaon Park metro">
+          <svg viewBox="0 0 32 20" shape-rendering="crispEdges" width="320" aria-hidden="true">
+            <rect width="32" height="20" fill="#3bceac"/>
+            <rect x="0" y="9" width="32" height="2" fill="#f5f3ff"/>
+            <rect x="15" y="0" width="2" height="20" fill="#f5f3ff"/>
+            <rect x="4" y="3" width="5" height="4" fill="#1c1840"/>
+            <rect x="21" y="13" width="6" height="4" fill="#ffd23f"/>
+            <rect x="23" y="12" width="2" height="1" fill="#ee4266"/>
+            <rect x="3" y="13" width="4" height="4" fill="#5b8def"/>
+          </svg>
+        </div>
+        <p style="margin-top:18px"><b>14 Lane B, Koregaon Park, Pune 411001</b><br />Look for the yellow door (yellow block). Two minutes on foot from the metro (blue block).</p>
+        <h2>Good to know</h2>
+        <details><summary>Do I need to book?</summary><p>Not for the arcade floor. Console lounge stations can be booked at the counter or by phone.</p></details>
+        <details><summary>Is there an age limit?</summary><p>Everyone is welcome until 9 pm. After 9 pm on Friday and Saturday it is 16 and over.</p></details>
+        <details><summary>Can we host a birthday?</summary><p>Yes. The party room fits 15 people and comes with 200 tokens and snacks.</p></details>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><b>Pixel Pit arcade cafe</b><br />14 Lane B, Koregaon Park, Pune 411001</p>
+      <p>Open every day from 11 am<br />Served by a Node.js http server</p>
+      <p>&copy; <span id="year">2026</span> Pixel Pit</p>
+    </div>
+  </footer>
+  <script src="/js/main.js"></script>
+</body>
+</html>

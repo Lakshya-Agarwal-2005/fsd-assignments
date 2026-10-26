@@ -1,10 +1,11 @@
 {
-  "name": "product-crud-api",
+  "name": "verdant-plant-api",
   "version": "1.0.0",
-  "description": "Four CRUD APIs using Node.js, Express.js and MongoDB",
+  "description": "Verdant: houseplant care tracker with four CRUD APIs built on Node.js, Express.js and MongoDB",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node --env-file-if-exists=.env server.js",
+    "seed": "node --env-file-if-exists=.env seed.js"
   },
   "dependencies": {
     "express": "^4.21.2",

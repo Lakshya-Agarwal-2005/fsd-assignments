@@ -3,33 +3,100 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Information</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Pixel Pit | Retro arcade cafe in Pune</title>
+  <meta name="description" content="Retro arcade cabinets, console lounge and milkshakes in Koregaon Park, Pune." />
+  <link rel="icon" href="/images/logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
-  <header>
-    <h1>Student Information System</h1>
-    <p>Node.js Static Website</p>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href="/"><img src="/images/logo.svg" alt="" width="34" height="34" />Pixel Pit</a>
+      <button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+      <nav class="nav" id="nav" aria-label="Main">
+        <a href="/" aria-current="page">Home</a>
+        <a href="/games">Games</a>
+        <a href="/events">Events</a>
+        <a href="/visit">Visit</a>
+      </nav>
+    </div>
   </header>
 
-  <nav>
-    <a href="/">Home</a>
-    <a href="/about.html">About</a>
-  </nav>
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div>
+          <h1>Insert coin. Stay for the high score.</h1>
+          <p class="lead">Pixel Pit is a retro arcade cafe in Koregaon Park with 40 restored cabinets, a console lounge and the city's thickest chocolate milkshake.</p>
+          <p>Warm up on the handheld first. Press Start, steer with the arrow keys or the on-screen pad, and try to beat today's high score.</p>
+          <div class="hero-actions">
+            <a class="btn" href="/games">See the cabinets</a>
+            <a class="btn alt" href="/visit">Plan a visit</a>
+          </div>
+          <div class="hero-facts">
+            <div><b>40</b><span>arcade cabinets</span></div>
+            <div><b>12</b><span>console stations</span></div>
+            <div><b>&#8377;10</b><span>per token</span></div>
+          </div>
+        </div>
 
-  <div class="container">
-    <h2>Welcome!</h2>
-    <p>This is a simple static website served using Node.js (http and fs modules).</p>
+        <div class="console" aria-label="Playable Snake game">
+          <div class="screen-frame">
+            <div class="screen-top"><span>SCORE <span id="score">0</span></span><span>HI <span id="best">0</span></span></div>
+            <canvas id="game" width="240" height="240" role="img" aria-label="Snake game screen. Press Start or Space to play, arrow keys to steer."></canvas>
+          </div>
+          <p class="console-label">PIXEL BOY</p>
+          <div class="controls">
+            <div class="dpad">
+              <button class="up" data-dir="up" aria-label="Up">&#9650;</button>
+              <button class="left" data-dir="left" aria-label="Left">&#9664;</button>
+              <span class="mid" aria-hidden="true"></span>
+              <button class="right" data-dir="right" aria-label="Right">&#9654;</button>
+              <button class="down" data-dir="down" aria-label="Down">&#9660;</button>
+            </div>
+            <div class="ab">
+              <button class="start-btn" id="startBtn">START</button>
+              <small id="status" aria-live="polite">Press Start</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <h2>Student Details</h2>
-    <table>
-      <tr><td><b>Name</b></td><td>Lakshya Agarwal</td></tr>
-      <tr><td><b>Course</b></td><td>B.Tech</td></tr>
-      <tr><td><b>Year</b></td><td>Second Year</td></tr>
-      <tr><td><b>Subject</b></td><td>Full Stack Development</td></tr>
-    </table>
-  </div>
+    <section class="band yellow">
+      <div class="wrap">
+        <div class="section-head"><h2>Three ways to play</h2><p>Walk in, buy tokens at the counter, and pick a corner.</p></div>
+        <div class="tiles">
+          <article class="tile"><svg class="icon" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><rect x="3" y="1" width="10" height="14" fill="#1c1840"/><rect x="4" y="3" width="8" height="6" fill="#9bbc0f"/><rect x="5" y="11" width="2" height="2" fill="#ee4266"/><rect x="9" y="11" width="2" height="2" fill="#ffd23f"/></svg><h3>The arcade floor</h3><p>Street Fighter II, Pac-Man, Time Crisis and 37 more cabinets, restored and tuned by our in-house technician.</p></article>
+          <article class="tile"><svg class="icon" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="5" width="14" height="7" fill="#1c1840"/><rect x="3" y="7" width="3" height="1" fill="#fff"/><rect x="4" y="6" width="1" height="3" fill="#fff"/><rect x="10" y="7" width="1" height="1" fill="#ee4266"/><rect x="12" y="8" width="1" height="1" fill="#3bceac"/></svg><h3>Console lounge</h3><p>Sofas, big screens and every console from the NES to the PS5. Book a station by the hour for you and three friends.</p></article>
+          <article class="tile"><svg class="icon" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><rect x="3" y="5" width="8" height="8" fill="#ee4266"/><rect x="11" y="7" width="2" height="4" fill="#ee4266"/><rect x="4" y="13" width="6" height="1" fill="#1c1840"/><rect x="5" y="2" width="1" height="2" fill="#5b8def"/><rect x="8" y="1" width="1" height="3" fill="#5b8def"/></svg><h3>The snack bar</h3><p>Milkshakes named after boss fights, loaded fries and masala maggi until closing time.</p></article>
+        </div>
+      </div>
+    </section>
 
-  <footer>Created using Node.js</footer>
+    <section class="band ink">
+      <div class="wrap">
+        <div class="section-head"><h2>Token packs</h2><p>Tokens never expire, so keep the leftovers for next time.</p></div>
+        <div class="prices">
+          <div class="price"><span>Quick play</span><b>&#8377;100</b><span>10 tokens</span></div>
+          <div class="price best"><span>Most picked</span><b>&#8377;250</b><span>30 tokens</span><ul><li>1 free milkshake</li></ul></div>
+          <div class="price"><span>Squad night</span><b>&#8377;900</b><span>120 tokens</span><ul><li>1 hour of console lounge</li><li>Loaded fries for the table</li></ul></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><b>Pixel Pit arcade cafe</b><br />14 Lane B, Koregaon Park, Pune 411001</p>
+      <p>Open every day from 11 am<br />Served by a Node.js http server</p>
+      <p>&copy; <span id="year">2026</span> Pixel Pit</p>
+    </div>
+  </footer>
+  <script src="/js/main.js"></script>
+  <script src="/js/snake.js"></script>
 </body>
 </html>

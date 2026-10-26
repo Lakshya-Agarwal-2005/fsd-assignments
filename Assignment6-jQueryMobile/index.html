@@ -3,261 +3,210 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Foodie Express - Mobile Website</title>
+  <meta name="theme-color" content="#0e1330" />
+  <title>Stargazer - night sky guide</title>
 
-  <!-- jQuery Mobile CSS, jQuery and jQuery Mobile JS -->
+  <!-- jQuery Mobile 1.4.5 (CSS + jQuery + jQuery Mobile) -->
   <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/stargazer.css" />
   <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
   <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-
-  <style>
-    .hero {
-      text-align: center;
-      padding: 1.5em 1em;
-      background: linear-gradient(135deg, #ff7043, #e64a19);
-      color: #fff;
-      border-radius: 0.6em;
-      text-shadow: none;
-    }
-    .hero h2 { margin: 0 0 0.3em; }
-    .price { float: right; font-weight: bold; color: #e64a19; }
-    .ui-li-aside { color: #e64a19; }
-  </style>
 </head>
 <body>
 
-  <!-- ================= PAGE 1: HOME ================= -->
-  <div data-role="page" id="home" data-theme="a">
+  <!-- Red overlay for night-vision mode (keeps your eyes dark-adapted) -->
+  <div id="redFilter" aria-hidden="true"></div>
+
+  <!-- Settings panel, shared by every page -->
+  <div data-role="panel" id="settings" data-position="right" data-display="overlay" data-theme="b">
+    <h3>Settings</h3>
+    <label for="nightVision">Night vision (red screen)</label>
+    <select id="nightVision" data-role="flipswitch">
+      <option value="off">Off</option>
+      <option value="on">On</option>
+    </select>
+    <p class="hint">Red light doesn't ruin your night vision, so you can read the app at the telescope.</p>
+
+    <label for="city">Your city</label>
+    <select id="city">
+      <option value="Pune">Pune</option>
+      <option value="Mumbai">Mumbai</option>
+      <option value="Delhi">Delhi</option>
+      <option value="Bengaluru">Bengaluru</option>
+    </select>
+    <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-btn-a">Done</a>
+  </div>
+
+  <!-- ===================== PAGE 1: TONIGHT ===================== -->
+  <div data-role="page" id="tonight" data-theme="b">
     <div data-role="header" data-position="fixed" data-theme="b">
-      <h1>Foodie Express</h1>
-      <a href="#order" data-icon="shop" class="ui-btn-right" data-transition="slide">Order</a>
+      <h1>Stargazer</h1>
+      <a href="#settings" class="ui-btn ui-btn-right ui-corner-all ui-icon-gear ui-btn-icon-notext">Settings</a>
     </div>
 
     <div role="main" class="ui-content">
-      <div class="hero">
-        <h2>Hungry?</h2>
-        <p>Fresh food delivered to your hostel in 30 minutes.</p>
+      <section class="moon-card">
+        <svg id="moon" viewBox="-60 -60 120 120" role="img" aria-label="Moon phase"></svg>
+        <div>
+          <p class="eyebrow" id="tonightDate"></p>
+          <h2 id="phaseName">Moon phase</h2>
+          <p id="phaseDetail"></p>
+        </div>
+      </section>
+
+      <div class="score-row">
+        <div class="score" id="skyScore">--</div>
+        <div>
+          <h3>Sky darkness tonight</h3>
+          <p id="skyAdvice"></p>
+        </div>
       </div>
 
-      <ul data-role="listview" data-inset="true">
-        <li data-role="list-divider">Explore</li>
-        <li><a href="#menu" data-transition="slide">Today's Menu</a></li>
-        <li><a href="#order" data-transition="slide">Place an Order</a></li>
-        <li><a href="#about" data-transition="slide">About Us</a></li>
-        <li><a href="#contact" data-transition="slide">Contact</a></li>
+      <ul data-role="listview" data-inset="true" id="planetsTonight">
+        <li data-role="list-divider">Planets to look for from <span class="cityName">Pune</span></li>
       </ul>
 
-      <div data-role="collapsible" data-collapsed="false" data-theme="a" data-content-theme="a">
-        <h4>Today's Offer</h4>
-        <p>Get <strong>20% OFF</strong> on all pizzas. Use code <strong>FSD20</strong>.</p>
-      </div>
+      <a href="#log" class="ui-btn ui-corner-all ui-btn-icon-left ui-icon-edit cta" data-transition="slideup">Log what you saw</a>
     </div>
 
     <div data-role="footer" data-position="fixed" data-theme="b">
       <div data-role="navbar">
         <ul>
-          <li><a href="#home" data-icon="home" class="ui-btn-active ui-state-persist">Home</a></li>
-          <li><a href="#menu" data-icon="bars">Menu</a></li>
-          <li><a href="#order" data-icon="shop">Order</a></li>
-          <li><a href="#contact" data-icon="phone">Contact</a></li>
+          <li><a href="#tonight" data-icon="star" class="ui-btn-active ui-state-persist">Tonight</a></li>
+          <li><a href="#events" data-icon="calendar">Events</a></li>
+          <li><a href="#planets" data-icon="eye">Planets</a></li>
+          <li><a href="#log" data-icon="edit">Log</a></li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- ================= PAGE 2: MENU ================= -->
-  <div data-role="page" id="menu" data-theme="a">
+  <!-- ===================== PAGE 2: EVENTS ===================== -->
+  <div data-role="page" id="events" data-theme="b">
     <div data-role="header" data-position="fixed" data-theme="b">
-      <a href="#home" data-icon="back" data-rel="back">Back</a>
-      <h1>Menu</h1>
+      <h1>Sky events</h1>
+      <a href="#settings" class="ui-btn ui-btn-right ui-corner-all ui-icon-gear ui-btn-icon-notext">Settings</a>
     </div>
 
     <div role="main" class="ui-content">
-      <ul data-role="listview" data-filter="true" data-filter-placeholder="Search dishes..." data-inset="true">
-        <li data-role="list-divider">Pizza</li>
-        <li><a href="#order">Margherita Pizza <span class="ui-li-aside">₹199</span></a></li>
-        <li><a href="#order">Farmhouse Pizza <span class="ui-li-aside">₹249</span></a></li>
-        <li data-role="list-divider">Burgers</li>
-        <li><a href="#order">Veg Burger <span class="ui-li-aside">₹99</span></a></li>
-        <li><a href="#order">Paneer Burger <span class="ui-li-aside">₹129</span></a></li>
-        <li data-role="list-divider">Drinks</li>
-        <li><a href="#order">Cold Coffee <span class="ui-li-aside">₹89</span></a></li>
-        <li><a href="#order">Mango Shake <span class="ui-li-aside">₹79</span></a></li>
-      </ul>
+      <form class="ui-filterable">
+        <input id="eventFilter" data-type="search" placeholder="Search events, e.g. meteor" />
+      </form>
+      <div data-role="collapsibleset" data-filter="true" data-input="#eventFilter" data-inset="true" id="eventList"></div>
     </div>
 
     <div data-role="footer" data-position="fixed" data-theme="b">
       <div data-role="navbar">
         <ul>
-          <li><a href="#home" data-icon="home">Home</a></li>
-          <li><a href="#menu" data-icon="bars" class="ui-btn-active ui-state-persist">Menu</a></li>
-          <li><a href="#order" data-icon="shop">Order</a></li>
-          <li><a href="#contact" data-icon="phone">Contact</a></li>
+          <li><a href="#tonight" data-icon="star">Tonight</a></li>
+          <li><a href="#events" data-icon="calendar" class="ui-btn-active ui-state-persist">Events</a></li>
+          <li><a href="#planets" data-icon="eye">Planets</a></li>
+          <li><a href="#log" data-icon="edit">Log</a></li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- ================= PAGE 3: ORDER FORM ================= -->
-  <div data-role="page" id="order" data-theme="a">
+  <!-- ===================== PAGE 3: PLANETS ===================== -->
+  <div data-role="page" id="planets" data-theme="b">
     <div data-role="header" data-position="fixed" data-theme="b">
-      <a href="#home" data-icon="back" data-rel="back">Back</a>
-      <h1>Place Order</h1>
+      <h1>Planets</h1>
+      <a href="#settings" class="ui-btn ui-btn-right ui-corner-all ui-icon-gear ui-btn-icon-notext">Settings</a>
     </div>
 
     <div role="main" class="ui-content">
-      <form id="orderForm">
-        <label for="custName">Your Name</label>
-        <input type="text" id="custName" placeholder="Enter your name" />
+      <ul data-role="listview" data-inset="true" id="planetList"></ul>
+    </div>
 
-        <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" placeholder="10 digit mobile number" />
+    <div data-role="footer" data-position="fixed" data-theme="b">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#tonight" data-icon="star">Tonight</a></li>
+          <li><a href="#events" data-icon="calendar">Events</a></li>
+          <li><a href="#planets" data-icon="eye" class="ui-btn-active ui-state-persist">Planets</a></li>
+          <li><a href="#log" data-icon="edit">Log</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-        <label for="item">Select Dish</label>
-        <select id="item">
-          <option value="199">Margherita Pizza - ₹199</option>
-          <option value="249">Farmhouse Pizza - ₹249</option>
-          <option value="99">Veg Burger - ₹99</option>
-          <option value="129">Paneer Burger - ₹129</option>
-          <option value="89">Cold Coffee - ₹89</option>
+  <!-- ===================== PAGE 4: PLANET DETAIL ===================== -->
+  <div data-role="page" id="planet" data-theme="b">
+    <div data-role="header" data-position="fixed" data-theme="b">
+      <a href="#planets" data-rel="back" class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext">Back</a>
+      <h1 id="planetTitle">Planet</h1>
+    </div>
+    <div role="main" class="ui-content" id="planetBody"></div>
+  </div>
+
+  <!-- ===================== PAGE 5: OBSERVATION LOG ===================== -->
+  <div data-role="page" id="log" data-theme="b">
+    <div data-role="header" data-position="fixed" data-theme="b">
+      <h1>Observation log</h1>
+      <a href="#settings" class="ui-btn ui-btn-right ui-corner-all ui-icon-gear ui-btn-icon-notext">Settings</a>
+    </div>
+
+    <div role="main" class="ui-content">
+      <form id="logForm">
+        <label for="target">What did you see?</label>
+        <select id="target" name="target">
+          <option>The Moon</option>
+          <option>Jupiter</option>
+          <option>Saturn</option>
+          <option>Mars</option>
+          <option>Venus</option>
+          <option>Orion Nebula</option>
+          <option>Pleiades</option>
+          <option>A meteor</option>
         </select>
 
-        <label for="qty">Quantity</label>
-        <input type="range" id="qty" value="1" min="1" max="10" data-highlight="true" />
+        <label for="obsDate">Date</label>
+        <input type="date" id="obsDate" name="obsDate" />
+
+        <label for="seeing">Seeing (1 = blurry, 5 = razor sharp)</label>
+        <input type="range" id="seeing" name="seeing" min="1" max="5" value="3" data-highlight="true" />
 
         <fieldset data-role="controlgroup" data-type="horizontal">
-          <legend>Delivery Type</legend>
-          <input type="radio" name="delivery" id="d1" value="Home Delivery" checked />
-          <label for="d1">Delivery</label>
-          <input type="radio" name="delivery" id="d2" value="Takeaway" />
-          <label for="d2">Takeaway</label>
+          <legend>Seen with</legend>
+          <input type="radio" name="gear" id="g1" value="Eyes" checked /><label for="g1">Eyes</label>
+          <input type="radio" name="gear" id="g2" value="Binoculars" /><label for="g2">Binoculars</label>
+          <input type="radio" name="gear" id="g3" value="Telescope" /><label for="g3">Telescope</label>
         </fieldset>
 
-        <label for="extraCheese">
-          <input type="checkbox" id="extraCheese" /> Add extra cheese (+₹30)
-        </label>
+        <label for="notes">Notes</label>
+        <textarea id="notes" name="notes" placeholder="Saw two of Jupiter's moons on the left side"></textarea>
 
-        <button type="submit" class="ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left">Place Order</button>
+        <button type="submit" class="ui-btn ui-corner-all ui-btn-icon-left ui-icon-plus cta">Save observation</button>
       </form>
 
-      <!-- Popup shown after placing the order -->
-      <div data-role="popup" id="orderPopup" data-overlay-theme="b" class="ui-content" style="max-width: 300px">
-        <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
-        <h3>Order Placed!</h3>
-        <p id="orderSummary"></p>
+      <ul data-role="listview" data-inset="true" data-split-icon="delete" data-split-theme="b" id="logList"></ul>
+
+      <!-- Confirm-delete popup -->
+      <div data-role="popup" id="confirmDelete" data-overlay-theme="b" data-theme="b" class="ui-corner-all">
+        <div class="popup-body">
+          <h3>Delete this observation?</h3>
+          <p id="deleteWhat"></p>
+          <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-btn-inline ui-btn-b">Keep it</a>
+          <a href="#" id="confirmDeleteBtn" class="ui-btn ui-corner-all ui-btn-inline danger">Delete</a>
+        </div>
       </div>
     </div>
 
     <div data-role="footer" data-position="fixed" data-theme="b">
       <div data-role="navbar">
         <ul>
-          <li><a href="#home" data-icon="home">Home</a></li>
-          <li><a href="#menu" data-icon="bars">Menu</a></li>
-          <li><a href="#order" data-icon="shop" class="ui-btn-active ui-state-persist">Order</a></li>
-          <li><a href="#contact" data-icon="phone">Contact</a></li>
+          <li><a href="#tonight" data-icon="star">Tonight</a></li>
+          <li><a href="#events" data-icon="calendar">Events</a></li>
+          <li><a href="#planets" data-icon="eye">Planets</a></li>
+          <li><a href="#log" data-icon="edit" class="ui-btn-active ui-state-persist">Log</a></li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- ================= PAGE 4: ABOUT ================= -->
-  <div data-role="page" id="about" data-theme="a">
-    <div data-role="header" data-position="fixed" data-theme="b">
-      <a href="#home" data-icon="back" data-rel="back">Back</a>
-      <h1>About Us</h1>
-    </div>
-
-    <div role="main" class="ui-content">
-      <h3>Who we are</h3>
-      <p>Foodie Express is a campus food delivery service started by students, for students.</p>
-
-      <div data-role="collapsibleset" data-inset="true">
-        <div data-role="collapsible">
-          <h4>Our Mission</h4>
-          <p>To serve tasty, hygienic and affordable food to every student on campus.</p>
-        </div>
-        <div data-role="collapsible">
-          <h4>Delivery Timings</h4>
-          <p>Monday - Sunday: 10:00 AM to 11:00 PM</p>
-        </div>
-        <div data-role="collapsible">
-          <h4>Payment Options</h4>
-          <p>UPI, Cash on Delivery and Debit / Credit Cards.</p>
-        </div>
-      </div>
-    </div>
-
-    <div data-role="footer" data-position="fixed" data-theme="b">
-      <h4>&copy; 2026 Foodie Express</h4>
-    </div>
-  </div>
-
-  <!-- ================= PAGE 5: CONTACT ================= -->
-  <div data-role="page" id="contact" data-theme="a">
-    <div data-role="header" data-position="fixed" data-theme="b">
-      <a href="#home" data-icon="back" data-rel="back">Back</a>
-      <h1>Contact</h1>
-    </div>
-
-    <div role="main" class="ui-content">
-      <ul data-role="listview" data-inset="true">
-        <li data-icon="phone"><a href="tel:+919876543210">Call: +91 98765 43210</a></li>
-        <li data-icon="mail"><a href="mailto:support@foodieexpress.in">support@foodieexpress.in</a></li>
-        <li data-icon="location"><a href="#">Hostel Block C, Campus Road</a></li>
-      </ul>
-
-      <label for="feedback">Send us feedback</label>
-      <textarea id="feedback" placeholder="Write your feedback here..."></textarea>
-      <a href="#" id="sendFeedback" class="ui-btn ui-corner-all ui-btn-b">Send Feedback</a>
-    </div>
-
-    <div data-role="footer" data-position="fixed" data-theme="b">
-      <div data-role="navbar">
-        <ul>
-          <li><a href="#home" data-icon="home">Home</a></li>
-          <li><a href="#menu" data-icon="bars">Menu</a></li>
-          <li><a href="#order" data-icon="shop">Order</a></li>
-          <li><a href="#contact" data-icon="phone" class="ui-btn-active ui-state-persist">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Order form: validate, calculate the bill and show it in a popup
-    $(document).on("submit", "#orderForm", function (e) {
-      e.preventDefault();
-      var name = $("#custName").val().trim();
-      var phone = $("#phone").val().trim();
-
-      if (name === "" || !/^\d{10}$/.test(phone)) {
-        alert("Please enter your name and a valid 10 digit phone number.");
-        return;
-      }
-
-      var price = parseInt($("#item").val(), 10);
-      var qty = parseInt($("#qty").val(), 10);
-      var extra = $("#extraCheese").is(":checked") ? 30 * qty : 0;
-      var total = price * qty + extra;
-      var dish = $("#item option:selected").text().split(" - ")[0];
-      var delivery = $("input[name='delivery']:checked").val();
-
-      $("#orderSummary").html(
-        "Thank you, <b>" + $("<span>").text(name).html() + "</b>!<br>" +
-        qty + " x " + dish + "<br>" + delivery + "<br>Total: <b>₹" + total + "</b>"
-      );
-      $("#orderPopup").popup("open");
-    });
-
-    $(document).on("click", "#sendFeedback", function (e) {
-      e.preventDefault();
-      if ($("#feedback").val().trim() === "") {
-        alert("Please write some feedback first.");
-      } else {
-        alert("Thanks for your feedback!");
-        $("#feedback").val("");
-      }
-    });
-  </script>
+  <script src="js/stargazer.js"></script>
 </body>
 </html>

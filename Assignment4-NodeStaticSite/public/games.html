@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Games | Pixel Pit</title>
+  <meta name="description" content="The arcade cabinets on the Pixel Pit floor." />
+  <link rel="icon" href="/images/logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href="/"><img src="/images/logo.svg" alt="" width="34" height="34" />Pixel Pit</a>
+      <button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+      <nav class="nav" id="nav" aria-label="Main">
+        <a href="/">Home</a>
+        <a href="/games" aria-current="page">Games</a>
+        <a href="/events">Events</a>
+        <a href="/visit">Visit</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="band">
+    <div class="wrap">
+      <div class="section-head"><h1>On the floor</h1><p>Every cabinet is original hardware. Filter by what you feel like playing.</p></div>
+      <div class="filters" role="group" aria-label="Filter games by genre">
+        <button class="filter" data-filter="all" aria-pressed="true">All</button>
+        <button class="filter" data-filter="fighting" aria-pressed="false">Fighting</button>
+        <button class="filter" data-filter="racing" aria-pressed="false">Racing</button>
+        <button class="filter" data-filter="rhythm" aria-pressed="false">Rhythm</button>
+        <button class="filter" data-filter="classics" aria-pressed="false">Classics</button>
+      </div>
+      <p id="gameCount" aria-live="polite">Showing all 9 cabinets</p>
+      <div class="cabinets">
+          <article class="cabinet" data-genre="fighting">
+            <div class="marquee" style="background:#ee4266" aria-hidden="true">&#129354;</div>
+            <div class="body">
+              <h3>Street Fighter II Turbo</h3>
+              <p>The 1992 classic. Winner stays on, loser buys the next round.</p>
+              <div class="tags"><span>2 players</span><span>2 tokens</span></div>
+            </div>
+          </article>
+          <article class="cabinet" data-genre="racing">
+            <div class="marquee" style="background:#5b8def" aria-hidden="true">&#127950;</div>
+            <div class="body">
+              <h3>OutRun</h3>
+              <p>Sit-down cabinet with a real gear stick and the original soundtrack.</p>
+              <div class="tags"><span>1 player</span><span>2 tokens</span></div>
+            </div>
+          </article>
+          <article class="cabinet" data-genre="classics">
+            <div class="marquee" style="background:#ffd23f" aria-hidden="true">&#128126;</div>
+            <div class="body">
+              <h3>Pac-Man</h3>
+              <p>The original maze game. Our wall of fame resets every Monday.</p>
+              <div class="tags"><span>1 player</span><span>1 token</span></div>
+            </div>
+          </article>
+          <article class="cabinet" data-genre="rhythm">
+            <div class="marquee" style="background:#3bceac" aria-hidden="true">&#128131;</div>
+            <div class="body">
+              <h3>Dance Dance Revolution</h3>
+              <p>Two pads, 600 songs and a fan pointed straight at you.</p>
+              <div class="tags"><span>2 players</span><span>3 tokens</span></div>
+            </div>
+          </article>
+          <article class="cabinet" data-genre="fighting">
+            <div class="marquee" style="background:#ee4266" aria-hidden="true">&#128009;</div>
+            <div class="body">
+              <h3>Tekken 3</h3>
+              <p>Our most played cabinet. Tournament every first Friday.</p>
+              <div class="tags"><span>2 players</span><span>2 tokens</span></div>
+            </div>
+          </article>
+          <article class="cabinet" data-genre="classics">
+            <div class="marquee" style="background:#ffd23f" aria-hidden="true">&#128640;</div>
+            <div class="body">
+              <h3>Galaga</h3>
+              <p>Shoot first, dodge later. Dual cabinet with Ms. Pac-Man.</p>
+              <div class="tags"><span>1 player</span><span>1 token</span></div>
+            </div>
+          </article>
+          <article class="cabinet" data-genre="racing">
+            <div class="marquee" style="background:#5b8def" aria-hidden="true">&#127949;</div>
+            <div class="body">
+              <h3>Manx TT Superbike</h3>
+              <p>Lean into the corners on a full-size motorbike cabinet.</p>
+              <div class="tags"><span>2 players</span><span>3 tokens</span></div>
+            </div>
+          </article>
+          <article class="cabinet" data-genre="rhythm">
+            <div class="marquee" style="background:#3bceac" aria-hidden="true">&#129345;</div>
+            <div class="body">
+              <h3>Taiko no Tatsujin</h3>
+              <p>Drum along to anime openings on giant taiko drums.</p>
+              <div class="tags"><span>2 players</span><span>2 tokens</span></div>
+            </div>
+          </article>
+          <article class="cabinet" data-genre="classics">
+            <div class="marquee" style="background:#ffd23f" aria-hidden="true">&#129521;</div>
+            <div class="body">
+              <h3>Tetris (1988)</h3>
+              <p>The Atari version, with a leaderboard taped to the side.</p>
+              <div class="tags"><span>2 players</span><span>1 token</span></div>
+            </div>
+          </article>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><b>Pixel Pit arcade cafe</b><br />14 Lane B, Koregaon Park, Pune 411001</p>
+      <p>Open every day from 11 am<br />Served by a Node.js http server</p>
+      <p>&copy; <span id="year">2026</span> Pixel Pit</p>
+    </div>
+  </footer>
+  <script src="/js/main.js"></script>
+</body>
+</html>

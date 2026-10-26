@@ -3,185 +3,97 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>StyleCart | Admin Inventory (CRUD)</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-  <style>
-    body { background: #f8fafc; }
-    .navbar-brand { color: #4338ca !important; font-weight: 800; }
-    .stat-card { border: none; border-radius: 0.8rem; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
-    .table thead th { font-size: .8rem; text-transform: uppercase; color: #64748b; }
-    .api-badge { font-family: monospace; font-size: .75rem; }
-  </style>
+  <title>Verdant - houseplant care tracker</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🌿</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
-  <nav class="navbar bg-white border-bottom px-4">
-    <span class="navbar-brand"><i class="bi bi-bag-check-fill"></i> StyleCart</span>
-    <span class="small text-muted">Express + MongoDB CRUD API</span>
-  </nav>
+  <header class="top">
+    <div class="wrap top-row">
+      <a href="/" class="logo"><span aria-hidden="true">🌿</span> Verdant</a>
+      <button class="btn primary" id="addBtn" type="button">Add a plant</button>
+    </div>
+  </header>
 
-  <main class="container py-4">
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+  <main class="wrap">
+    <section class="hero" aria-live="polite">
       <div>
-        <h3 class="fw-bold mb-0">Admin Inventory Management (CRUD)</h3>
-        <p class="text-muted small mb-0">Create, Read, Update and Delete products stored in MongoDB.</p>
+        <p class="date" id="today"></p>
+        <h1 id="headline">Checking on your plants</h1>
+        <p class="sub" id="subline">Loading your collection from the database.</p>
+        <button class="btn water" id="waterAllBtn" type="button" hidden>Water all thirsty plants</button>
       </div>
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal" onclick="openForm()">
-        <i class="bi bi-plus-lg"></i> Add New Product
-      </button>
-    </div>
+      <dl class="summary">
+        <div><dt>Plants</dt><dd id="sumPlants">0</dd></div>
+        <div><dt>Need water today</dt><dd id="sumThirsty">0</dd></div>
+        <div><dt>Rooms</dt><dd id="sumRooms">0</dd></div>
+      </dl>
+    </section>
 
-    <!-- API reference -->
-    <div class="row g-3 mb-4">
-      <div class="col-6 col-lg-3"><div class="card stat-card p-3"><span class="badge bg-success api-badge mb-2">POST</span><div class="small">/api/products</div><div class="fw-semibold">Create</div></div></div>
-      <div class="col-6 col-lg-3"><div class="card stat-card p-3"><span class="badge bg-primary api-badge mb-2">GET</span><div class="small">/api/products</div><div class="fw-semibold">Read</div></div></div>
-      <div class="col-6 col-lg-3"><div class="card stat-card p-3"><span class="badge bg-warning text-dark api-badge mb-2">PUT</span><div class="small">/api/products/:id</div><div class="fw-semibold">Update</div></div></div>
-      <div class="col-6 col-lg-3"><div class="card stat-card p-3"><span class="badge bg-danger api-badge mb-2">DELETE</span><div class="small">/api/products/:id</div><div class="fw-semibold">Delete</div></div></div>
-    </div>
-
-    <div id="alertBox"></div>
-
-    <div class="card border-0 shadow-sm">
-      <div class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
-          <thead class="table-light">
-            <tr>
-              <th class="ps-3">Product</th>
-              <th>Category</th>
-              <th>Price (₹)</th>
-              <th>Stock</th>
-              <th class="text-end pe-3">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="productTable">
-            <tr><td colspan="5" class="text-center text-muted py-4">Loading...</td></tr>
-          </tbody>
-        </table>
+    <section class="controls" aria-label="Filter plants">
+      <div class="rooms" id="roomTabs" role="group" aria-label="Room"></div>
+      <div class="control-row">
+        <input type="search" id="search" placeholder="Search by name or species" aria-label="Search plants" />
+        <label class="sort">Sort
+          <select id="sort">
+            <option value="thirsty">Thirstiest first</option>
+            <option value="name">Name</option>
+            <option value="newest">Recently added</option>
+          </select>
+        </label>
       </div>
-    </div>
+    </section>
+
+    <section class="plants" id="plants" aria-label="Your plants"></section>
   </main>
 
-  <!-- Add / Edit modal -->
-  <div class="modal fade" id="productModal" tabindex="-1">
-    <div class="modal-dialog">
-      <form class="modal-content" id="productForm">
-        <div class="modal-header">
-          <h5 class="modal-title" id="formTitle">Add Product</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" id="productId" />
-          <div class="mb-3">
-            <label class="form-label">Product Name</label>
-            <input class="form-control" id="name" required />
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Category</label>
-            <select class="form-select" id="category">
-              <option>Electronics</option>
-              <option>Clothing</option>
-              <option>Skincare</option>
-              <option>Stationery</option>
-            </select>
-          </div>
-          <div class="row">
-            <div class="col mb-3">
-              <label class="form-label">Price (₹)</label>
-              <input type="number" min="0" class="form-control" id="price" required />
-            </div>
-            <div class="col mb-3">
-              <label class="form-label">Stock</label>
-              <input type="number" min="0" class="form-control" id="stock" required />
-            </div>
-          </div>
-          <div class="mb-1">
-            <label class="form-label">Description</label>
-            <textarea class="form-control" id="description" rows="2"></textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary">Save Product</button>
-        </div>
-      </form>
-    </div>
+  <footer class="foot wrap">
+    <p>Verdant stores every plant in MongoDB through four REST APIs: POST, GET, PUT and DELETE on <code>/api/plants</code>.</p>
+  </footer>
+
+  <!-- Add / edit form -->
+  <dialog id="plantDialog" aria-labelledby="formTitle">
+    <form id="plantForm" method="dialog" novalidate>
+      <div class="dialog-head">
+        <h2 id="formTitle">Add a plant</h2>
+        <button type="button" class="icon-btn" id="closeDialog" aria-label="Close">✕</button>
+      </div>
+
+      <fieldset class="icons">
+        <legend>Pick an icon</legend>
+        <div id="iconPicker"></div>
+      </fieldset>
+
+      <div class="grid2">
+        <label>Name<input name="name" required maxlength="40" placeholder="Monty" /><span class="err" data-for="name"></span></label>
+        <label>Species<input name="species" maxlength="60" placeholder="Monstera deliciosa" /><span class="err" data-for="species"></span></label>
+      </div>
+      <div class="grid2">
+        <label>Room<select name="room" id="roomSelect"></select><span class="err" data-for="room"></span></label>
+        <label>Light<select name="light" id="lightSelect"></select><span class="err" data-for="light"></span></label>
+      </div>
+      <div class="grid2">
+        <label>Water every (days)<input name="waterEveryDays" type="number" min="1" max="60" required placeholder="7" /><span class="err" data-for="waterEveryDays"></span></label>
+        <label>Last watered<input name="lastWatered" type="date" required /><span class="err" data-for="lastWatered"></span></label>
+      </div>
+      <label>Notes<textarea name="notes" rows="2" maxlength="200" placeholder="Anything to remember about this plant"></textarea><span class="err" data-for="notes"></span></label>
+
+      <p class="form-error" id="formError" role="alert"></p>
+      <div class="dialog-actions">
+        <button type="button" class="btn ghost" id="cancelBtn">Cancel</button>
+        <button type="submit" class="btn primary" id="saveBtn">Add plant</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+    <span id="toastText"></span>
+    <button type="button" id="toastAction" hidden></button>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    const API = "/api/products";
-    const modal = new bootstrap.Modal(document.getElementById("productModal"));
-    const $ = (id) => document.getElementById(id);
-    let products = [];
-
-    function showAlert(message, type = "success") {
-      $("alertBox").innerHTML = `<div class="alert alert-${type} py-2">${message}</div>`;
-      setTimeout(() => ($("alertBox").innerHTML = ""), 3000);
-    }
-
-    // Escape user text before putting it in HTML
-    const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-
-    // READ - GET /api/products
-    async function loadProducts() {
-      const res = await fetch(API);
-      products = await res.json();
-      $("productTable").innerHTML = products.length
-        ? products.map((p) => `
-          <tr>
-            <td class="ps-3"><div class="fw-semibold">${esc(p.name)}</div><div class="small text-muted">${esc(p.description)}</div></td>
-            <td><span class="badge bg-light text-dark border">${esc(p.category)}</span></td>
-            <td class="fw-semibold text-primary">₹${p.price.toLocaleString("en-IN")}</td>
-            <td><span class="badge ${p.stock < 10 ? "bg-danger-subtle text-danger" : "bg-success-subtle text-success"}">${p.stock} Units</span></td>
-            <td class="text-end pe-3 text-nowrap">
-              <button class="btn btn-sm btn-outline-primary" onclick="openForm('${p._id}')"><i class="bi bi-pencil"></i> Edit</button>
-              <button class="btn btn-sm btn-outline-danger" onclick="deleteProduct('${p._id}')"><i class="bi bi-trash"></i> Delete</button>
-            </td>
-          </tr>`).join("")
-        : `<tr><td colspan="5" class="text-center text-muted py-4">No products yet. Click "Add New Product".</td></tr>`;
-    }
-
-    function openForm(id) {
-      const p = products.find((x) => x._id === id) || { name: "", category: "Electronics", price: "", stock: "", description: "" };
-      $("formTitle").textContent = id ? "Edit Product" : "Add Product";
-      $("productId").value = id || "";
-      ["name", "category", "price", "stock", "description"].forEach((f) => ($(f).value = p[f]));
-      if (id) modal.show();
-    }
-
-    // CREATE - POST /api/products   |   UPDATE - PUT /api/products/:id
-    $("productForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const id = $("productId").value;
-      const body = {
-        name: $("name").value,
-        category: $("category").value,
-        price: Number($("price").value),
-        stock: Number($("stock").value),
-        description: $("description").value,
-      };
-      const res = await fetch(id ? `${API}/${id}` : API, {
-        method: id ? "PUT" : "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      const data = await res.json();
-      if (!res.ok) return showAlert(data.message, "danger");
-      modal.hide();
-      showAlert(id ? "Product updated successfully" : "Product added successfully");
-      loadProducts();
-    });
-
-    // DELETE - DELETE /api/products/:id
-    async function deleteProduct(id) {
-      if (!confirm("Delete this product?")) return;
-      const res = await fetch(`${API}/${id}`, { method: "DELETE" });
-      const data = await res.json();
-      showAlert(data.message, res.ok ? "success" : "danger");
-      loadProducts();
-    }
-
-    loadProducts();
-  </script>
+  <script src="/js/app.js"></script>
 </body>
 </html>
