@@ -1,0 +1,13 @@
+{
+  "name": "product-crud-api",
+  "version": "1.0.0",
+  "description": "Four CRUD APIs using Node.js, Express.js and MongoDB",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5"
+  }
+}

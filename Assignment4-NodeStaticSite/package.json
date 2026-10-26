@@ -1,0 +1,9 @@
+{
+  "name": "node-static-website",
+  "version": "1.0.0",
+  "description": "A Node.js application which serves a static website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

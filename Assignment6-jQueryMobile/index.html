@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Foodie Express - Mobile Website</title>
+
+  <!-- jQuery Mobile CSS, jQuery and jQuery Mobile JS -->
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+  <style>
+    .hero {
+      text-align: center;
+      padding: 1.5em 1em;
+      background: linear-gradient(135deg, #ff7043, #e64a19);
+      color: #fff;
+      border-radius: 0.6em;
+      text-shadow: none;
+    }
+    .hero h2 { margin: 0 0 0.3em; }
+    .price { float: right; font-weight: bold; color: #e64a19; }
+    .ui-li-aside { color: #e64a19; }
+  </style>
+</head>
+<body>
+
+  <!-- ================= PAGE 1: HOME ================= -->
+  <div data-role="page" id="home" data-theme="a">
+    <div data-role="header" data-position="fixed" data-theme="b">
+      <h1>Foodie Express</h1>
+      <a href="#order" data-icon="shop" class="ui-btn-right" data-transition="slide">Order</a>
+    </div>
+
+    <div role="main" class="ui-content">
+      <div class="hero">
+        <h2>Hungry?</h2>
+        <p>Fresh food delivered to your hostel in 30 minutes.</p>
+      </div>
+
+      <ul data-role="listview" data-inset="true">
+        <li data-role="list-divider">Explore</li>
+        <li><a href="#menu" data-transition="slide">Today's Menu</a></li>
+        <li><a href="#order" data-transition="slide">Place an Order</a></li>
+        <li><a href="#about" data-transition="slide">About Us</a></li>
+        <li><a href="#contact" data-transition="slide">Contact</a></li>
+      </ul>
+
+      <div data-role="collapsible" data-collapsed="false" data-theme="a" data-content-theme="a">
+        <h4>Today's Offer</h4>
+        <p>Get <strong>20% OFF</strong> on all pizzas. Use code <strong>FSD20</strong>.</p>
+      </div>
+    </div>
+
+    <div data-role="footer" data-position="fixed" data-theme="b">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#home" data-icon="home" class="ui-btn-active ui-state-persist">Home</a></li>
+          <li><a href="#menu" data-icon="bars">Menu</a></li>
+          <li><a href="#order" data-icon="shop">Order</a></li>
+          <li><a href="#contact" data-icon="phone">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= PAGE 2: MENU ================= -->
+  <div data-role="page" id="menu" data-theme="a">
+    <div data-role="header" data-position="fixed" data-theme="b">
+      <a href="#home" data-icon="back" data-rel="back">Back</a>
+      <h1>Menu</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+      <ul data-role="listview" data-filter="true" data-filter-placeholder="Search dishes..." data-inset="true">
+        <li data-role="list-divider">Pizza</li>
+        <li><a href="#order">Margherita Pizza <span class="ui-li-aside">₹199</span></a></li>
+        <li><a href="#order">Farmhouse Pizza <span class="ui-li-aside">₹249</span></a></li>
+        <li data-role="list-divider">Burgers</li>
+        <li><a href="#order">Veg Burger <span class="ui-li-aside">₹99</span></a></li>
+        <li><a href="#order">Paneer Burger <span class="ui-li-aside">₹129</span></a></li>
+        <li data-role="list-divider">Drinks</li>
+        <li><a href="#order">Cold Coffee <span class="ui-li-aside">₹89</span></a></li>
+        <li><a href="#order">Mango Shake <span class="ui-li-aside">₹79</span></a></li>
+      </ul>
+    </div>
+
+    <div data-role="footer" data-position="fixed" data-theme="b">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#home" data-icon="home">Home</a></li>
+          <li><a href="#menu" data-icon="bars" class="ui-btn-active ui-state-persist">Menu</a></li>
+          <li><a href="#order" data-icon="shop">Order</a></li>
+          <li><a href="#contact" data-icon="phone">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= PAGE 3: ORDER FORM ================= -->
+  <div data-role="page" id="order" data-theme="a">
+    <div data-role="header" data-position="fixed" data-theme="b">
+      <a href="#home" data-icon="back" data-rel="back">Back</a>
+      <h1>Place Order</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+      <form id="orderForm">
+        <label for="custName">Your Name</label>
+        <input type="text" id="custName" placeholder="Enter your name" />
+
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" placeholder="10 digit mobile number" />
+
+        <label for="item">Select Dish</label>
+        <select id="item">
+          <option value="199">Margherita Pizza - ₹199</option>
+          <option value="249">Farmhouse Pizza - ₹249</option>
+          <option value="99">Veg Burger - ₹99</option>
+          <option value="129">Paneer Burger - ₹129</option>
+          <option value="89">Cold Coffee - ₹89</option>
+        </select>
+
+        <label for="qty">Quantity</label>
+        <input type="range" id="qty" value="1" min="1" max="10" data-highlight="true" />
+
+        <fieldset data-role="controlgroup" data-type="horizontal">
+          <legend>Delivery Type</legend>
+          <input type="radio" name="delivery" id="d1" value="Home Delivery" checked />
+          <label for="d1">Delivery</label>
+          <input type="radio" name="delivery" id="d2" value="Takeaway" />
+          <label for="d2">Takeaway</label>
+        </fieldset>
+
+        <label for="extraCheese">
+          <input type="checkbox" id="extraCheese" /> Add extra cheese (+₹30)
+        </label>
+
+        <button type="submit" class="ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left">Place Order</button>
+      </form>
+
+      <!-- Popup shown after placing the order -->
+      <div data-role="popup" id="orderPopup" data-overlay-theme="b" class="ui-content" style="max-width: 300px">
+        <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        <h3>Order Placed!</h3>
+        <p id="orderSummary"></p>
+      </div>
+    </div>
+
+    <div data-role="footer" data-position="fixed" data-theme="b">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#home" data-icon="home">Home</a></li>
+          <li><a href="#menu" data-icon="bars">Menu</a></li>
+          <li><a href="#order" data-icon="shop" class="ui-btn-active ui-state-persist">Order</a></li>
+          <li><a href="#contact" data-icon="phone">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= PAGE 4: ABOUT ================= -->
+  <div data-role="page" id="about" data-theme="a">
+    <div data-role="header" data-position="fixed" data-theme="b">
+      <a href="#home" data-icon="back" data-rel="back">Back</a>
+      <h1>About Us</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+      <h3>Who we are</h3>
+      <p>Foodie Express is a campus food delivery service started by students, for students.</p>
+
+      <div data-role="collapsibleset" data-inset="true">
+        <div data-role="collapsible">
+          <h4>Our Mission</h4>
+          <p>To serve tasty, hygienic and affordable food to every student on campus.</p>
+        </div>
+        <div data-role="collapsible">
+          <h4>Delivery Timings</h4>
+          <p>Monday - Sunday: 10:00 AM to 11:00 PM</p>
+        </div>
+        <div data-role="collapsible">
+          <h4>Payment Options</h4>
+          <p>UPI, Cash on Delivery and Debit / Credit Cards.</p>
+        </div>
+      </div>
+    </div>
+
+    <div data-role="footer" data-position="fixed" data-theme="b">
+      <h4>&copy; 2026 Foodie Express</h4>
+    </div>
+  </div>
+
+  <!-- ================= PAGE 5: CONTACT ================= -->
+  <div data-role="page" id="contact" data-theme="a">
+    <div data-role="header" data-position="fixed" data-theme="b">
+      <a href="#home" data-icon="back" data-rel="back">Back</a>
+      <h1>Contact</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+      <ul data-role="listview" data-inset="true">
+        <li data-icon="phone"><a href="tel:+919876543210">Call: +91 98765 43210</a></li>
+        <li data-icon="mail"><a href="mailto:support@foodieexpress.in">support@foodieexpress.in</a></li>
+        <li data-icon="location"><a href="#">Hostel Block C, Campus Road</a></li>
+      </ul>
+
+      <label for="feedback">Send us feedback</label>
+      <textarea id="feedback" placeholder="Write your feedback here..."></textarea>
+      <a href="#" id="sendFeedback" class="ui-btn ui-corner-all ui-btn-b">Send Feedback</a>
+    </div>
+
+    <div data-role="footer" data-position="fixed" data-theme="b">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#home" data-icon="home">Home</a></li>
+          <li><a href="#menu" data-icon="bars">Menu</a></li>
+          <li><a href="#order" data-icon="shop">Order</a></li>
+          <li><a href="#contact" data-icon="phone" class="ui-btn-active ui-state-persist">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Order form: validate, calculate the bill and show it in a popup
+    $(document).on("submit", "#orderForm", function (e) {
+      e.preventDefault();
+      var name = $("#custName").val().trim();
+      var phone = $("#phone").val().trim();
+
+      if (name === "" || !/^\d{10}$/.test(phone)) {
+        alert("Please enter your name and a valid 10 digit phone number.");
+        return;
+      }
+
+      var price = parseInt($("#item").val(), 10);
+      var qty = parseInt($("#qty").val(), 10);
+      var extra = $("#extraCheese").is(":checked") ? 30 * qty : 0;
+      var total = price * qty + extra;
+      var dish = $("#item option:selected").text().split(" - ")[0];
+      var delivery = $("input[name='delivery']:checked").val();
+
+      $("#orderSummary").html(
+        "Thank you, <b>" + $("<span>").text(name).html() + "</b>!<br>" +
+        qty + " x " + dish + "<br>" + delivery + "<br>Total: <b>₹" + total + "</b>"
+      );
+      $("#orderPopup").popup("open");
+    });
+
+    $(document).on("click", "#sendFeedback", function (e) {
+      e.preventDefault();
+      if ($("#feedback").val().trim() === "") {
+        alert("Please write some feedback first.");
+      } else {
+        alert("Thanks for your feedback!");
+        $("#feedback").val("");
+      }
+    });
+  </script>
+</body>
+</html>

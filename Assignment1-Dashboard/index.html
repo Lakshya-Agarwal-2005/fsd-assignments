@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sales Dashboard</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <style>
+    :root {
+      --sidebar-width: 250px;
+      --primary-color: #0d6efd;
+      --sidebar-bg: #111827;
+      --bg-light: #f4f6fb;
+    }
+
+    body {
+      background-color: var(--bg-light);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-width);
+      min-height: 100vh;
+      background-color: var(--sidebar-bg);
+      position: sticky;
+      top: 0;
+    }
+
+    .sidebar .brand {
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.25rem;
+      padding: 1.5rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sidebar .nav-link {
+      color: #9ca3af;
+      margin: 0.2rem 0.75rem;
+      padding: 0.7rem 1rem;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 500;
+    }
+
+    .sidebar .nav-link:hover,
+    .sidebar .nav-link.active {
+      color: #fff;
+      background-color: var(--primary-color);
+    }
+
+    .sidebar .section-label {
+      color: #6b7280;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1rem 1.75rem 0.25rem;
+    }
+
+    /* Main content */
+    .main-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Statistic cards */
+    .stat-card {
+      border: none;
+      border-radius: 0.85rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+    }
+
+    .icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+
+    .chart-box {
+      position: relative;
+      height: 280px;
+    }
+
+    .progress {
+      height: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="d-flex">
+    <!-- Sidebar (large screens) -->
+    <aside class="sidebar d-none d-lg-block">
+      <div class="brand">
+        <i class="bi bi-speedometer2 text-primary"></i>
+        <span>ShopMetrics</span>
+      </div>
+      <div class="section-label">Main</div>
+      <ul class="nav flex-column">
+        <li><a href="#" class="nav-link active"><i class="bi bi-house-door"></i> Dashboard</a></li>
+        <li><a href="#" class="nav-link"><i class="bi bi-graph-up"></i> Analytics</a></li>
+        <li><a href="#" class="nav-link"><i class="bi bi-box-seam"></i> Products</a></li>
+        <li><a href="#" class="nav-link"><i class="bi bi-receipt"></i> Orders</a></li>
+        <li><a href="#" class="nav-link"><i class="bi bi-people"></i> Customers</a></li>
+      </ul>
+      <div class="section-label">Account</div>
+      <ul class="nav flex-column">
+        <li><a href="#" class="nav-link"><i class="bi bi-gear"></i> Settings</a></li>
+        <li><a href="#" class="nav-link"><i class="bi bi-box-arrow-left"></i> Logout</a></li>
+      </ul>
+    </aside>
+
+    <!-- Sidebar (mobile, offcanvas) -->
+    <div class="offcanvas offcanvas-start text-white" style="background: var(--sidebar-bg); width: 260px" tabindex="-1" id="mobileSidebar">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title fw-bold"><i class="bi bi-speedometer2 text-primary me-2"></i>ShopMetrics</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body p-0 sidebar" style="min-height: auto">
+        <ul class="nav flex-column">
+          <li><a href="#" class="nav-link active"><i class="bi bi-house-door"></i> Dashboard</a></li>
+          <li><a href="#" class="nav-link"><i class="bi bi-graph-up"></i> Analytics</a></li>
+          <li><a href="#" class="nav-link"><i class="bi bi-box-seam"></i> Products</a></li>
+          <li><a href="#" class="nav-link"><i class="bi bi-receipt"></i> Orders</a></li>
+          <li><a href="#" class="nav-link"><i class="bi bi-people"></i> Customers</a></li>
+          <li><a href="#" class="nav-link"><i class="bi bi-gear"></i> Settings</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="main-content d-flex flex-column min-vh-100">
+      <!-- Top navbar -->
+      <nav class="navbar bg-white border-bottom px-4 py-3 sticky-top">
+        <button class="btn btn-light d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
+          <i class="bi bi-list fs-5"></i>
+        </button>
+
+        <form class="d-none d-sm-block me-auto">
+          <div class="input-group">
+            <span class="input-group-text bg-light border-0"><i class="bi bi-search text-muted"></i></span>
+            <input type="text" class="form-control bg-light border-0" placeholder="Search..." style="width: 230px" />
+          </div>
+        </form>
+
+        <div class="d-flex align-items-center gap-3 ms-auto">
+          <button class="btn btn-light position-relative rounded-circle p-2">
+            <i class="bi bi-bell"></i>
+            <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+          </button>
+          <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark" data-bs-toggle="dropdown">
+              <span class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center me-2 fw-bold" style="width: 34px; height: 34px">L</span>
+              <span class="fw-semibold small d-none d-md-inline">Lakshya</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><a class="dropdown-item" href="#">Settings</a></li>
+              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <main class="p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <h4 class="fw-bold mb-0">Dashboard Overview</h4>
+            <p class="text-muted small mb-0">Welcome back! Here is your store summary for this month.</p>
+          </div>
+          <button class="btn btn-primary d-flex align-items-center gap-2">
+            <i class="bi bi-download"></i><span class="d-none d-sm-inline">Download Report</span>
+          </button>
+        </div>
+
+        <!-- Statistic cards: 1 per row on phones, 2 on tablets, 4 on desktops -->
+        <div class="row g-3 mb-4">
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card stat-card p-3">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="text-muted small fw-medium">Total Sales</span>
+                <div class="icon-box bg-primary-subtle text-primary"><i class="bi bi-currency-rupee"></i></div>
+              </div>
+              <h3 class="fw-bold mb-1">₹2,45,800</h3>
+              <span class="text-success small fw-medium"><i class="bi bi-arrow-up-right"></i> +14.2%
+                <span class="text-muted fw-normal ms-1">vs last month</span></span>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card stat-card p-3">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="text-muted small fw-medium">Orders</span>
+                <div class="icon-box bg-success-subtle text-success"><i class="bi bi-bag-check"></i></div>
+              </div>
+              <h3 class="fw-bold mb-1">1,862</h3>
+              <span class="text-success small fw-medium"><i class="bi bi-arrow-up-right"></i> +6.8%
+                <span class="text-muted fw-normal ms-1">vs last month</span></span>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card stat-card p-3">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="text-muted small fw-medium">New Customers</span>
+                <div class="icon-box bg-warning-subtle text-warning"><i class="bi bi-person-plus"></i></div>
+              </div>
+              <h3 class="fw-bold mb-1">512</h3>
+              <span class="text-danger small fw-medium"><i class="bi bi-arrow-down-right"></i> -3.1%
+                <span class="text-muted fw-normal ms-1">vs last month</span></span>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card stat-card p-3">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="text-muted small fw-medium">Avg. Rating</span>
+                <div class="icon-box bg-info-subtle text-info"><i class="bi bi-star"></i></div>
+              </div>
+              <h3 class="fw-bold mb-1">4.6 / 5</h3>
+              <span class="text-success small fw-medium"><i class="bi bi-arrow-up-right"></i> +0.2
+                <span class="text-muted fw-normal ms-1">vs last month</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="row g-3 mb-4">
+          <div class="col-12 col-xl-8">
+            <div class="card border-0 shadow-sm rounded-3 p-3 h-100">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="fw-bold mb-0">Monthly Sales</h6>
+                <div class="btn-group btn-group-sm">
+                  <button class="btn btn-outline-secondary active">2026</button>
+                  <button class="btn btn-outline-secondary">2025</button>
+                </div>
+              </div>
+              <div class="chart-box"><canvas id="salesChart"></canvas></div>
+            </div>
+          </div>
+
+          <div class="col-12 col-xl-4">
+            <div class="card border-0 shadow-sm rounded-3 p-3 h-100">
+              <h6 class="fw-bold mb-3">Sales by Category</h6>
+              <div class="chart-box"><canvas id="categoryChart"></canvas></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3">
+          <!-- Recent orders table -->
+          <div class="col-12 col-xl-8">
+            <div class="card border-0 shadow-sm rounded-3 h-100">
+              <div class="card-header bg-white border-0 pt-3 d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold mb-0">Recent Orders</h6>
+                <a href="#" class="small text-decoration-none fw-semibold">View All</a>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th class="ps-3">Order ID</th>
+                      <th>Customer</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="ps-3 fw-medium">#ORD-1045</td>
+                      <td>Rohan Mehta</td>
+                      <td>₹1,250</td>
+                      <td><span class="badge bg-success-subtle text-success">Delivered</span></td>
+                    </tr>
+                    <tr>
+                      <td class="ps-3 fw-medium">#ORD-1044</td>
+                      <td>Ananya Singh</td>
+                      <td>₹3,499</td>
+                      <td><span class="badge bg-warning-subtle text-warning">Pending</span></td>
+                    </tr>
+                    <tr>
+                      <td class="ps-3 fw-medium">#ORD-1043</td>
+                      <td>Kabir Verma</td>
+                      <td>₹899</td>
+                      <td><span class="badge bg-primary-subtle text-primary">Shipped</span></td>
+                    </tr>
+                    <tr>
+                      <td class="ps-3 fw-medium">#ORD-1042</td>
+                      <td>Isha Kapoor</td>
+                      <td>₹2,150</td>
+                      <td><span class="badge bg-danger-subtle text-danger">Cancelled</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Monthly targets -->
+          <div class="col-12 col-xl-4">
+            <div class="card border-0 shadow-sm rounded-3 p-3 h-100">
+              <h6 class="fw-bold mb-3">Monthly Targets</h6>
+              <div class="mb-3">
+                <div class="d-flex justify-content-between small mb-1"><span>Sales</span><span class="fw-semibold">82%</span></div>
+                <div class="progress"><div class="progress-bar bg-primary" style="width: 82%"></div></div>
+              </div>
+              <div class="mb-3">
+                <div class="d-flex justify-content-between small mb-1"><span>New Customers</span><span class="fw-semibold">64%</span></div>
+                <div class="progress"><div class="progress-bar bg-warning" style="width: 64%"></div></div>
+              </div>
+              <div class="mb-3">
+                <div class="d-flex justify-content-between small mb-1"><span>Deliveries</span><span class="fw-semibold">91%</span></div>
+                <div class="progress"><div class="progress-bar bg-success" style="width: 91%"></div></div>
+              </div>
+              <div>
+                <div class="d-flex justify-content-between small mb-1"><span>Returns Handled</span><span class="fw-semibold">47%</span></div>
+                <div class="progress"><div class="progress-bar bg-info" style="width: 47%"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="mt-auto text-center text-muted small py-3 border-top bg-white">
+        &copy; 2026 ShopMetrics Dashboard &middot; Built with HTML, CSS &amp; Bootstrap 5
+      </footer>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script>
+    // Line chart - monthly sales
+    new Chart(document.getElementById("salesChart"), {
+      type: "line",
+      data: {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [{
+          label: "Sales (₹)",
+          data: [98000, 112000, 105000, 134000, 128000, 152000, 168000, 159000, 187000, 205000, 198000, 245800],
+          borderColor: "#0d6efd",
+          backgroundColor: "rgba(13, 110, 253, 0.1)",
+          fill: true,
+          tension: 0.35,
+          pointRadius: 3
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { ticks: { callback: (v) => "₹" + v / 1000 + "k" }, grid: { color: "#eef1f6" } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    // Doughnut chart - sales by category
+    new Chart(document.getElementById("categoryChart"), {
+      type: "doughnut",
+      data: {
+        labels: ["Electronics", "Clothing", "Books", "Home"],
+        datasets: [{
+          data: [40, 28, 14, 18],
+          backgroundColor: ["#0d6efd", "#20c997", "#ffc107", "#fd7e14"],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: "68%",
+        plugins: { legend: { position: "bottom", labels: { boxWidth: 12, padding: 14 } } }
+      }
+    });
+  </script>
+</body>
+</html>
